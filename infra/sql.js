@@ -181,7 +181,7 @@ module.exports = (_a = class Sql {
         host: "localhost",
         port: 3306,
         user: "root",
-        password: "5*Aa#2WemKV2",
+        password: "",
         database: "academia"
     }),
     _a);
