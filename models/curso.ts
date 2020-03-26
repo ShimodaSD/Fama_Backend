@@ -6,21 +6,13 @@ export = class Curso {
 	public responsavelCurso: string;
 	public horasSemanaisCurso: string;
 	public descricaoCurso: string;
+	public duracaoCurso: string;
 
-	// private static validar(c: Contato): string {
-	// 	c.nome = (c.nome || "").trim().toUpperCase();
-	// 	if (c.nome.length < 3 || c.nome.length > 200)
-	// 		return "Nome inválido";
-	// 	c.endereco = (c.endereco || "").trim().toUpperCase();
-	// 	if (c.endereco.length < 3 || c.endereco.length > 200)
-	// 		return "Endereço inválido";	
-	// 	c.email = (c.email || "").trim().toUpperCase();
-	// 	if (c.email.length < 3 || c.email.length > 200)
-	// 			return "Email inválido";
-	// 	if (c.peso <= 0)
-	// 		return "Peso inválido!";
-	// 	return null;
-	// }
+	private static validar(c: Curso): string {
+		
+		
+		return null;
+	}
 
 	public static async listar(): Promise<Curso[]> {
 		let lista: Curso[] = null;
@@ -49,39 +41,41 @@ export = class Curso {
 	// 	//return ((lista && lista[0]) || null);
 	// }
 
-	// public static async criar(c: Contato): Promise<string> {
-	// 	let res: string;
-	// 	if ((res = Contato.validar(c)))
-	// 		return res;
+	public static async criar(c: Curso): Promise<string> {
+		let res: string;
+		if ((res = Curso.validar(c)))
+			return res;
 
-	// 	await Sql.conectar(async (sql: Sql) => {
-	// 			await sql.query("insert into contato (nome,endereco,email,peso) values (?,?,?,?)", [c.nome,c.endereco,c.email,c.peso]);
-	// 	});
-
-		
-	// }
-
-	// public static async alterar(c: Contato): Promise<string> {
-	// 	let res: string;
-	// 	if ((res = Contato.validar(c)))
-	// 		return res;
-
-	// 	await Sql.conectar(async (sql: Sql) => {	
-	// 			await sql.query("update contato set nome = ?, endereco = ?, email = ?, peso = ? where id = ?", [c.nome,c.endereco,c.email,c.peso,c.id]);
-	// 			res = sql.linhasAfetadas.toString();
-	// 	});
+		await Sql.conectar(async (sql: Sql) => {
+				await sql.query("insert into curso (nomeCurso,responsavelCurso,horasSemanaisCurso,duracaoCurso,descricaoCurso) values (?,?,?,?,?)", [c.nomeCurso,c.responsavelCurso,c.horasSemanaisCurso,c.duracaoCurso,c.descricaoCurso]);
+		});
 
 		
-	// }
+	}
 
-	// public static async excluir(id: number): Promise<string> {
-	// 	let res: string = null;
+	public static async alterar(c: Curso): Promise<string> {
+		let res: string;
+		if ((res = Curso.validar(c)))
+			return res;
 
-	// 	await Sql.conectar(async (sql: Sql) => {
-	// 		await sql.query("delete from contato where id = " + id);
-	// 		res = sql.linhasAfetadas.toString();
-	// 	});
+		await Sql.conectar(async (sql: Sql) => {	
+				await sql.query("update curso set nomeCurso = ?, responsavelCurso = ?, horasSemanaisCurso = ?, duracaoCurso = ?, descricaoCurso = ? where idCurso = ?", [c.nomeCurso,c.responsavelCurso,c.horasSemanaisCurso,c.duracaoCurso,c.descricaoCurso,c.idCurso]);
+				res = sql.linhasAfetadas.toString();
+		});
 
-	// 	return res;
-	// }
+		
+	 }
+
+	public static async excluir(idCurso: number): Promise<string> {
+		let res: string = null;
+
+		await Sql.conectar(async (sql: Sql) => {
+			await sql.query("delete from curso where idCurso = " + idCurso);
+			res = sql.linhasAfetadas.toString();
+		});
+
+		return res;
+	}
 }
+
+

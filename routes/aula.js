@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 const express = require("express");
 const wrap = require("express-async-error-wrapper");
 //import Usuario = require("../models/usuario");
-const Curso = require("../models/curso");
+const Aula = require("../models/aula");
 const router = express.Router();
 // router.all("/criar", wrap(async (req: express.Request, res: express.Response) => {
 // 	let u = await Usuario.cookie(req);
@@ -34,7 +34,7 @@ const router = express.Router();
 // 	}
 // }));
 router.get("/listar", wrap((req, res) => __awaiter(this, void 0, void 0, function* () {
-    res.render("contato/listar", { lista: JSON.stringify(yield Curso.listar()) });
+    res.render("contato/listar", { lista: JSON.stringify(yield Aula.listar()) });
 })));
 module.exports = router;
-//# sourceMappingURL=curso.js.map
+//# sourceMappingURL=aula.js.map

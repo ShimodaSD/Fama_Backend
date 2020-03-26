@@ -28,6 +28,8 @@ const ejs = require("ejs");
 const lru = require("lru-cache");
 ejs.cache = lru(200);
 const app = express();
+var cors = require('cors');
+app.use(cors());
 // Não queremos o header X-Powered-By
 app.disable("x-powered-by");
 app.use(cookieParser());
@@ -78,10 +80,12 @@ app.use((req, res, next) => {
 // Cadastros simples
 // app.use("/", require("./routes/home"));
 app.use("/curso", require("./routes/curso"));
+app.use("/aula", require("./routes/aula"));
 // app.use("/usuario", require("./routes/usuario"));
 // app.use("/contato", require("./routes/contato"));
 // API
 app.use("/api/curso", require("./routes/api/curso"));
+app.use("/api/aula", require("./routes/api/aula"));
 // app.use("/api/usuario", require("./routes/api/usuario"));
 // app.use("/api/contato", require("./routes/api/contato"));
 // Depois de registrados todos os caminhos das rotas e seus

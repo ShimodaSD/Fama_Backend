@@ -14,30 +14,31 @@ router.get("/listar", wrap(async (req: express.Request, res: express.Response) =
 // 	res.json(isNaN(id) ? null : await Contato.obter(id));
 // }));
 
-// router.post("/criar", wrap(async (req: express.Request, res: express.Response) => {
-// 	//let u = await Usuario.cookie(req, res, true);
-// 	//if (!u)
-// 	//	return;
-// 	let c = req.body as Contato;
-// 	jsonRes(res, 400, c ? await Contato.criar(c) : "Dados inválidos!");
-// }));
+router.post("/criar", wrap(async (req: express.Request, res: express.Response) => {
+	//let u = await Usuario.cookie(req, res, true);
+	//if (!u)
+	//	return;
+	let c = req.body as Curso;
+	jsonRes(res, 400, c ? await Curso.criar(c) : "Dados inválidos!");
+}));
 
-// router.post("/alterar", wrap(async (req: express.Request, res: express.Response) => {
-// 	let u = await Usuario.cookie(req, res, true);
-// 	if (!u)
-// 		return;
-// 	let c = req.body as Contato;
-// 	if (c)
-// 		c.id = parseInt(req.body.id);
-// 	jsonRes(res, 400, (c && !isNaN(c.id)) ? await Contato.alterar(c) : "Dados inválidos!");
-// }));
+router.post("/alterar", wrap(async (req: express.Request, res: express.Response) => {
+	// let u = await Usuario.cookie(req, res, true);
+	// if (!u)
+	// 	return;
+	let c = req.body as Curso;
+	if (c)
+		console.log(c)
+		c.idCurso = parseInt(req.body.idCurso);
+	jsonRes(res, 400, (c && !isNaN(c.idCurso)) ? await Curso.alterar(c) : "Dados inválidos!"+(c.idCurso));
+}));
 
-// router.get("/excluir", wrap(async (req: express.Request, res: express.Response) => {
-// 	let u = await Usuario.cookie(req, res, true);
-// 	if (!u)
-// 		return;
-// 	let id = parseInt(req.query["id"]);
-// 	jsonRes(res, 400, isNaN(id) ? "Dados inválidos!" : await Contato.excluir(id));
-// }));
+router.get("/excluir", wrap(async (req: express.Request, res: express.Response) => {
+	// let u = await Usuario.cookie(req, res, true);
+	// if (!u)
+	// 	return;
+	let idCurso = parseInt(req.query["idCurso"]);
+	jsonRes(res, 400, isNaN(idCurso) ? "Dados inválidos!" : await Curso.excluir(idCurso));
+}));
 
 export = router;
