@@ -332,5 +332,7 @@ ASALocalRun/
 
 app.js
 config.js
+sql.ts
+sql.js
 *.js.map
 deploy/
