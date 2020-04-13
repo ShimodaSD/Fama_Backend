@@ -56,4 +56,4 @@ module.exports = class Funcionario {
         });
     }
 };
-//# sourceMappingURL=funcionario.js.map
+//# sourceMappingURL=funcionario-model.js.map

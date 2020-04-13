@@ -10,10 +10,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 const express = require("express");
 const wrap = require("express-async-error-wrapper");
-const Aula = require("../../models/aula");
+const Funcionario = require("../models/funcionario-model");
 const router = express.Router();
 router.get("/listar", wrap((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    res.json(yield Aula.listar());
+    res.json(yield Funcionario.listar());
 })));
 module.exports = router;
-//# sourceMappingURL=aula.js.map
+//# sourceMappingURL=funcionario-route.js.map

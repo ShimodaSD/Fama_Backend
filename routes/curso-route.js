@@ -10,39 +10,35 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 const express = require("express");
 const wrap = require("express-async-error-wrapper");
-const jsonRes = require("../../utils/jsonRes");
-const Curso = require("../../models/curso");
+const util_1 = require("util");
+const Curso = require("../models/curso-model");
 const router = express.Router();
-router.get("/listar", wrap((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    res.json(yield Curso.listar());
-})));
-// router.get("/obter", wrap(async (req: express.Request, res: express.Response) => {
-// 	let id = parseInt(req.query["id"]);
-// 	res.json(isNaN(id) ? null : await Contato.obter(id));
-// }));
+// TO-DO cookies
+// let u = await Usuario.cookie(req, res, true);
+// if (!u)
+// 	return;
 router.post("/criar", wrap((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    //let u = await Usuario.cookie(req, res, true);
-    //if (!u)
-    //	return;
     let c = req.body;
-    jsonRes(res, 400, c ? yield Curso.criar(c) : "Dados inválidos!");
+    res.json(util_1.isNullOrUndefined(c) ? null : yield Curso.criar(c));
+})));
+router.get("/obter", wrap((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let id = parseInt(req.query["id"]);
+    // to-do: understand res.json
+    res.json(isNaN(id) ? null : yield Curso.obter(id));
 })));
 router.post("/alterar", wrap((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    // let u = await Usuario.cookie(req, res, true);
-    // if (!u)
-    // 	return;
     let c = req.body;
     if (c)
         console.log(c);
     c.idCurso = parseInt(req.body.idCurso);
-    jsonRes(res, 400, (c && !isNaN(c.idCurso)) ? yield Curso.alterar(c) : "Dados inválidos!" + (c.idCurso));
+    res.json(isNaN(c.idCurso) ? null : yield Curso.alterar(c));
 })));
 router.get("/excluir", wrap((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    // let u = await Usuario.cookie(req, res, true);
-    // if (!u)
-    // 	return;
-    let idCurso = parseInt(req.query["idCurso"]);
-    jsonRes(res, 400, isNaN(idCurso) ? "Dados inválidos!" : yield Curso.excluir(idCurso));
+    let id = parseInt(req.query["idCurso"]);
+    res.json(isNaN(id) ? null : yield Curso.excluir(id));
+})));
+router.get("/listar", wrap((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    res.json(yield Curso.listar());
 })));
 module.exports = router;
-//# sourceMappingURL=curso.js.map
+//# sourceMappingURL=curso-route.js.map

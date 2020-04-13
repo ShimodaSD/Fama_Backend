@@ -35,4 +35,4 @@ module.exports = class Aula {
         });
     }
 };
-//# sourceMappingURL=aula.js.map
+//# sourceMappingURL=aula-model.js.map
