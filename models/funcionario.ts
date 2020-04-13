@@ -10,7 +10,7 @@ export = class Funcionario {
     public emailFuncionario: string;
     public telefoneFuncionario: string;
     public atuacaoFuncionario : string;
-    public cargaHorariaFunciona: string;
+    public cargaHorariaFuncionario: string;
     public salarioFuncionario: string;
     public formacaoFuncionario: string;
     public idEndereco: number;
@@ -27,7 +27,7 @@ export = class Funcionario {
 
 		await Sql.conectar(async (sql: Sql) => {
             lista = await sql.query("select idFuncionario,nomeFuncionario,dataNascFuncionario,cpfFuncionario,rgFuncionario,estadoCivilFuncionario,emailFuncionario,telefoneFuncionario,"
-            +"atuacaoFuncionario ,cargaHorariaFunciona,salarioFuncionario,idEndereco,numeroSisFuncionario from funcionario order by nomeCurso asc") as Funcionario[];
+            +"atuacaoFuncionario ,cargaHorariaFuncionario,salarioFuncionario,idEndereco,numeroSisFuncionario from funcionario order by nomeFuncionario asc") as Funcionario[];
 		});
 
 		return (lista || []);
@@ -39,8 +39,8 @@ export = class Funcionario {
 			return res;
 
 		await Sql.conectar(async (sql: Sql) => {
-                await sql.query("insert into curso (nomeFuncionario,dataNascFuncionario,cpfFuncionario,rgFuncionario,estadoCivilFuncionario,emailFuncionario,telefoneFuncionario,atuacaoFuncionario ,cargaHorariaFunciona,salarioFuncionario,idEndereco,numeroSisFuncionario) values (?,?,?,?,?,?,?,?,?,?,?,?)", 
-                [f.nomeFuncionario,f.dataNascFuncionario,f.cpfFuncionario,f.rgFuncionario,f.estadoCivilFuncionario,f.emailFuncionario,f.telefoneFuncionario,f.atuacaoFuncionario ,f.cargaHorariaFunciona,f.salarioFuncionario,f.idEndereco,f.numeroSisFuncionario]);
+                await sql.query("insert into funcionario (nomeFuncionario,dataNascFuncionario,cpfFuncionario,rgFuncionario,estadoCivilFuncionario,emailFuncionario,telefoneFuncionario,atuacaoFuncionario ,cargaHorariaFuncionario,salarioFuncionario,idEndereco,numeroSisFuncionario) values (?,?,?,?,?,?,?,?,?,?,?,?)", 
+                [f.nomeFuncionario,f.dataNascFuncionario,f.cpfFuncionario,f.rgFuncionario,f.estadoCivilFuncionario,f.emailFuncionario,f.telefoneFuncionario,f.atuacaoFuncionario ,f.cargaHorariaFuncionario,f.salarioFuncionario,f.idEndereco,f.numeroSisFuncionario]);
 		});
 
 		
@@ -51,13 +51,14 @@ export = class Funcionario {
 		if ((res = Funcionario.validar(f)))
 			return res;
 
+			//TO-DO ADICIONAR ID ENDERECO
 		await Sql.conectar(async (sql: Sql) => {	
-				await sql.query("update funcionario set nomeCurso = ?, responsavelCurso = ?, horasSemanaisCurso = ?, duracaoCurso = ?, descricaoCurso = ? where idFuncionario = ?", [f.nomeFuncionario,f.dataNascFuncionario,f.cpfFuncionario,f.rgFuncionario,f.estadoCivilFuncionario,f.emailFuncionario,f.telefoneFuncionario,f.atuacaoFuncionario ,f.cargaHorariaFunciona,f.salarioFuncionario,f.idEndereco,f.numeroSisFuncionario,f.idFuncionario]);
+				await sql.query("update funcionario set nomeFuncionario = ?, dataNascFuncionario = ?, cpfFuncionario = ?, rgFuncionario = ?, estadoCivilFuncionario = ?, emailFuncionario = ?, telefoneFuncionario = ?, atuacaoFuncionario = ?, cargaHorariaFuncionario = ?, salarioFuncionario = ? where idFuncionario = ?", [f.nomeFuncionario,f.dataNascFuncionario,f.cpfFuncionario,f.rgFuncionario,f.estadoCivilFuncionario,f.emailFuncionario,f.telefoneFuncionario,f.atuacaoFuncionario ,f.cargaHorariaFuncionario,f.salarioFuncionario,f.idFuncionario]);
 				res = sql.linhasAfetadas.toString();
 		});
 
 		
-	 }
+	}
 
 	public static async excluir(idFuncionario: number): Promise<string> {
 		let res: string = null;

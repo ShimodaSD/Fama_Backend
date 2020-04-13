@@ -10,7 +10,6 @@ export = class Curso {
 
 	private static validar(c: Curso): string {
 		
-		
 		return null;
 	}
 
