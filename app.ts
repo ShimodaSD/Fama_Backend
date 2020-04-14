@@ -92,18 +92,9 @@ app.use((req: express.Request, res: express.Response, next: NextFunction) => {
 
 // Cadastros simples
 // app.use("/", require("./routes/home"));
-app.use("/curso", require("./routes/curso"));
-app.use("/aula", require("./routes/aula"));
-app.use("/funcionario",require("./routes/funcionario"));
-
-// app.use("/usuario", require("./routes/usuario"));
-// app.use("/contato", require("./routes/contato"));
-// API
-app.use("/api/curso", require("./routes/api/curso"));
-app.use("/api/aula", require("./routes/api/aula"));
-app.use("/api/funcionario",require("./routes/api/funcionario"));
-// app.use("/api/usuario", require("./routes/api/usuario"));
-// app.use("/api/contato", require("./routes/api/contato"));
+app.use("/api/curso", require("./routes/curso-route"));
+// app.use("/aula", require("./routes/aula"));
+// app.use("/api/funcionario",require("./routes/funcionario-route"));
 
 // Depois de registrados todos os caminhos das rotas e seus
 // tratadores, registramos os tratadores que serão chamados

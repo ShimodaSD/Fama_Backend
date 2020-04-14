@@ -1,7 +1,6 @@
 ﻿import express = require("express");
 import wrap = require("express-async-error-wrapper");
-import jsonRes = require("../../utils/jsonRes");
-import Aula = require("../../models/aula");
+import Aula = require("../models/aula-model");
 
 const router = express.Router();
 
