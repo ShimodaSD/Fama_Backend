@@ -5,38 +5,32 @@ import Curso = require("../models/curso-model");
 
 const router = express.Router();
 
-// TO-DO cookies
+// TODO: cookies
 // let u = await Usuario.cookie(req, res, true);
 	// if (!u)
 	// 	return;
 
 router.post("/criar", wrap(async (req: express.Request, res: express.Response) => {
-	let c = req.body as Curso;
+	let c: Curso = req.body;
+	console.log("req = ", c)
 	res.json(isNullOrUndefined(c) ? null : await Curso.criar(c));
 }));
 
-
-router.get("/obter", wrap(async (req: express.Request, res: express.Response) => {
-	let id = parseInt(req.query["id"]);
-	// to-do: understand res.json
-	res.json(isNaN(id) ? null : await Curso.obter(id));
-}));
-
+// router.get("/obter", wrap(async (req: express.Request, res: express.Response) => {
+// 	let id = parseInt(req.query["id"]);
+// 	res.json(isNaN(id) ? null : await Curso.obter(id));
+// }));
 
 router.post("/alterar", wrap(async (req: express.Request, res: express.Response) => {
-	let c = req.body as Curso;
-	if (c)
-		console.log(c)
-		c.idCurso = parseInt(req.body.idCurso);
+	let c: Curso = req.body;
+	c.idCurso = parseInt(req.body.idCurso);
 	res.json(isNaN(c.idCurso) ? null : await Curso.alterar(c));
 }));
-
 
 router.get("/excluir", wrap(async (req: express.Request, res: express.Response) => {
 	let id = parseInt(req.query["idCurso"]);
 	res.json(isNaN(id) ? null : await Curso.excluir(id));
 }));
-
 
 router.get("/listar", wrap(async (req: express.Request, res: express.Response) => {
 	res.json(await Curso.listar());

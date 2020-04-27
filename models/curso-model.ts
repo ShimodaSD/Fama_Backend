@@ -8,6 +8,7 @@ export = class Curso {
 	public descricaoCurso: string;
 	public duracaoCurso: string;
 
+	//TODO: VALIDAR CURSO (NAO SERIA MELHOR NO FRONT END?)
 	private static validar(c: Curso): string {
 		return null;
 	}
@@ -22,7 +23,6 @@ export = class Curso {
 		});		
 	}
 
-
 	public static async obter(id: number): Promise<Curso> {
 		let lista: Curso[] = null;
 
@@ -32,13 +32,11 @@ export = class Curso {
 
 		if (lista && lista[0]) {
 			return lista[0];
-		}else {
+		} 
+		else {
 			return null;
 		}
-
-		//return ((lista && lista[0]) || null);
 	}
-
 
 	public static async alterar(c: Curso): Promise<string> {
 		let res: string;
@@ -51,7 +49,6 @@ export = class Curso {
 		});
 	}
 
-
 	public static async excluir(idCurso: number): Promise<string> {
 		let res: string = null;
 
@@ -63,13 +60,12 @@ export = class Curso {
 		return res;
 	}
 
-
 	public static async listar(): Promise<Curso[]> {
 		let lista: Curso[] = null;
 
 		await sql.conectar(async (sql: sql) => {
 			lista = await sql.query("select idCurso, nomeCurso, responsavelCurso, horasSemanaisCurso, duracaoCurso, "
-			+ " descricaoCurso from curso order by idCurso desc") as Curso[];
+			+ " descricaoCurso from curso order by idCurso asc") as Curso[];
 		});
 
 		return (lista || []);

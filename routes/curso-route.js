@@ -13,23 +13,21 @@ const wrap = require("express-async-error-wrapper");
 const util_1 = require("util");
 const Curso = require("../models/curso-model");
 const router = express.Router();
-// TO-DO cookies
+// TODO: cookies
 // let u = await Usuario.cookie(req, res, true);
 // if (!u)
 // 	return;
 router.post("/criar", wrap((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let c = req.body;
+    console.log("req = ", c);
     res.json(util_1.isNullOrUndefined(c) ? null : yield Curso.criar(c));
 })));
-router.get("/obter", wrap((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    let id = parseInt(req.query["id"]);
-    // to-do: understand res.json
-    res.json(isNaN(id) ? null : yield Curso.obter(id));
-})));
+// router.get("/obter", wrap(async (req: express.Request, res: express.Response) => {
+// 	let id = parseInt(req.query["id"]);
+// 	res.json(isNaN(id) ? null : await Curso.obter(id));
+// }));
 router.post("/alterar", wrap((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let c = req.body;
-    if (c)
-        console.log(c);
     c.idCurso = parseInt(req.body.idCurso);
     res.json(isNaN(c.idCurso) ? null : yield Curso.alterar(c));
 })));

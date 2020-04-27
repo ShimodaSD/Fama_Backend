@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 const sql = require("../infra/sql");
 module.exports = class Curso {
+    //TODO: VALIDAR CURSO (NAO SERIA MELHOR NO FRONT END?)
     static validar(c) {
         return null;
     }
@@ -35,7 +36,6 @@ module.exports = class Curso {
             else {
                 return null;
             }
-            //return ((lista && lista[0]) || null);
         });
     }
     static alterar(c) {
@@ -64,7 +64,7 @@ module.exports = class Curso {
             let lista = null;
             yield sql.conectar((sql) => __awaiter(this, void 0, void 0, function* () {
                 lista = (yield sql.query("select idCurso, nomeCurso, responsavelCurso, horasSemanaisCurso, duracaoCurso, "
-                    + " descricaoCurso from curso order by idCurso desc"));
+                    + " descricaoCurso from curso order by idCurso asc"));
             }));
             return (lista || []);
         });
