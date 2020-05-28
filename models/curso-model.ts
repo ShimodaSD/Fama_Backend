@@ -4,9 +4,8 @@ export = class Curso {
 	public idCurso: number;
 	public nomeCurso: string;
 	public responsavelCurso: string;
-	public horasSemanaisCurso: string;
+	public horasSemanaisCurso: number;
 	public descricaoCurso: string;
-	public duracaoCurso: string;
 
 	private static validar(c: Curso): string {
 		return null;
@@ -18,7 +17,7 @@ export = class Curso {
 			return res;
 
 		await sql.conectar(async (sql: sql) => {
-			await sql.query("insert into curso (nomeCurso,responsavelCurso,horasSemanaisCurso,duracaoCurso,descricaoCurso) values (?,?,?,?,?)", [c.nomeCurso,c.responsavelCurso,c.horasSemanaisCurso,c.duracaoCurso,c.descricaoCurso]);
+			await sql.query("insert into curso (nomeCurso,responsavelCurso,horasSemanaisCurso,descricaoCurso) values (?,?,?,?)", [c.nomeCurso,c.responsavelCurso,c.horasSemanaisCurso,c.descricaoCurso]);
 		});		
 	}
 
@@ -27,7 +26,7 @@ export = class Curso {
 		let lista: Curso[] = null;
 
 		await sql.conectar(async (sql: sql) => {
-			lista = await sql.query("select idCurso, nomeCurso, responsavelCurso, horasSemanaisCurso, descricaoCurso, duracaoCursocurso where id = ?",[id]) as Curso[];
+			lista = await sql.query("select idCurso, nomeCurso, responsavelCurso, horasSemanaisCurso, descricaoCurso where id = ?",[id]) as Curso[];
 		});
 
 		if (lista && lista[0]) {
@@ -46,7 +45,7 @@ export = class Curso {
 			return res;
 
 		await sql.conectar(async (sql: sql) => {	
-			await sql.query("update curso set nomeCurso = ?, responsavelCurso = ?, horasSemanaisCurso = ?, duracaoCurso = ?, descricaoCurso = ? where idCurso = ?", [c.nomeCurso,c.responsavelCurso,c.horasSemanaisCurso,c.duracaoCurso,c.descricaoCurso,c.idCurso]);
+			await sql.query("update curso set nomeCurso = ?, responsavelCurso = ?, horasSemanaisCurso = ?, descricaoCurso = ? where idCurso = ?", [c.nomeCurso,c.responsavelCurso,c.horasSemanaisCurso,c.descricaoCurso,c.idCurso]);
 			res = sql.linhasAfetadas.toString();
 		});
 	}
@@ -68,20 +67,10 @@ export = class Curso {
 		let lista: Curso[] = null;
 
 		await sql.conectar(async (sql: sql) => {
-			lista = await sql.query("select idCurso, nomeCurso, responsavelCurso, horasSemanaisCurso, duracaoCurso, "
-			+ " descricaoCurso from curso order by idCurso desc") as Curso[];
+			lista = await sql.query("select idCurso, nomeCurso, responsavelCurso, horasSemanaisCurso, "
+			+ " descricaoCurso from curso order by idCurso asc") as Curso[];
 		});
 
 		return (lista || []);
 	}
-
-	
-
-	
-
-	
-
-	
 }
-
-

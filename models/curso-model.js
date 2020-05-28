@@ -19,7 +19,7 @@ module.exports = class Curso {
             if ((res = Curso.validar(c)))
                 return res;
             yield sql.conectar((sql) => __awaiter(this, void 0, void 0, function* () {
-                yield sql.query("insert into curso (nomeCurso,responsavelCurso,horasSemanaisCurso,duracaoCurso,descricaoCurso) values (?,?,?,?,?)", [c.nomeCurso, c.responsavelCurso, c.horasSemanaisCurso, c.duracaoCurso, c.descricaoCurso]);
+                yield sql.query("insert into curso (nomeCurso,responsavelCurso,horasSemanaisCurso,descricaoCurso) values (?,?,?,?)", [c.nomeCurso, c.responsavelCurso, c.horasSemanaisCurso, c.descricaoCurso]);
             }));
         });
     }
@@ -27,7 +27,7 @@ module.exports = class Curso {
         return __awaiter(this, void 0, void 0, function* () {
             let lista = null;
             yield sql.conectar((sql) => __awaiter(this, void 0, void 0, function* () {
-                lista = (yield sql.query("select idCurso, nomeCurso, responsavelCurso, horasSemanaisCurso, descricaoCurso, duracaoCursocurso where id = ?", [id]));
+                lista = (yield sql.query("select idCurso, nomeCurso, responsavelCurso, horasSemanaisCurso, descricaoCurso where id = ?", [id]));
             }));
             if (lista && lista[0]) {
                 return lista[0];
@@ -44,7 +44,7 @@ module.exports = class Curso {
             if ((res = Curso.validar(c)))
                 return res;
             yield sql.conectar((sql) => __awaiter(this, void 0, void 0, function* () {
-                yield sql.query("update curso set nomeCurso = ?, responsavelCurso = ?, horasSemanaisCurso = ?, duracaoCurso = ?, descricaoCurso = ? where idCurso = ?", [c.nomeCurso, c.responsavelCurso, c.horasSemanaisCurso, c.duracaoCurso, c.descricaoCurso, c.idCurso]);
+                yield sql.query("update curso set nomeCurso = ?, responsavelCurso = ?, horasSemanaisCurso = ?, descricaoCurso = ? where idCurso = ?", [c.nomeCurso, c.responsavelCurso, c.horasSemanaisCurso, c.descricaoCurso, c.idCurso]);
                 res = sql.linhasAfetadas.toString();
             }));
         });
@@ -63,7 +63,7 @@ module.exports = class Curso {
         return __awaiter(this, void 0, void 0, function* () {
             let lista = null;
             yield sql.conectar((sql) => __awaiter(this, void 0, void 0, function* () {
-                lista = (yield sql.query("select idCurso, nomeCurso, responsavelCurso, horasSemanaisCurso, duracaoCurso, "
+                lista = (yield sql.query("select idCurso, nomeCurso, responsavelCurso, horasSemanaisCurso, "
                     + " descricaoCurso from curso order by idCurso desc"));
             }));
             return (lista || []);
