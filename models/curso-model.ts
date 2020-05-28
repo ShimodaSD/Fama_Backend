@@ -26,7 +26,7 @@ export = class Curso {
 		let lista: Curso[] = null;
 
 		await sql.conectar(async (sql: sql) => {
-			lista = await sql.query("select idCurso, nomeCurso, responsavelCurso, horasSemanaisCurso, descricaoCurso where id = ?",[id]) as Curso[];
+			lista = await sql.query("select * from curso where id = ?",[id]) as Curso[];
 		});
 
 		if (lista && lista[0]) {
