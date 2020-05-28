@@ -27,7 +27,7 @@ module.exports = class Curso {
         return __awaiter(this, void 0, void 0, function* () {
             let lista = null;
             yield sql.conectar((sql) => __awaiter(this, void 0, void 0, function* () {
-                lista = (yield sql.query("select idCurso, nomeCurso, responsavelCurso, horasSemanaisCurso, descricaoCurso where id = ?", [id]));
+                lista = (yield sql.query("select * from curso where id = ?", [id]));
             }));
             if (lista && lista[0]) {
                 return lista[0];
@@ -64,7 +64,7 @@ module.exports = class Curso {
             let lista = null;
             yield sql.conectar((sql) => __awaiter(this, void 0, void 0, function* () {
                 lista = (yield sql.query("select idCurso, nomeCurso, responsavelCurso, horasSemanaisCurso, "
-                    + " descricaoCurso from curso order by idCurso desc"));
+                    + " descricaoCurso from curso order by idCurso asc"));
             }));
             return (lista || []);
         });

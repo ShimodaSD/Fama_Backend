@@ -26,14 +26,13 @@ router.get("/obter", wrap(async (req: express.Request, res: express.Response) =>
 router.post("/alterar", wrap(async (req: express.Request, res: express.Response) => {
 	let a = req.body as Presenca;
 	if (a)
-		console.log(a)
 		a.idAluno = parseInt(req.body.idPresenca);
 	res.json(isNaN(a.idAluno) ? null : await Presenca.alterar(a));
 }));
 
 
 router.get("/excluir", wrap(async (req: express.Request, res: express.Response) => {
-	let id = parseInt(req.query["idPresenca"]);
+	let id = parseInt(req.query["idAluno"]);
 	res.json(isNaN(id) ? null : await Presenca.excluir(id));
 }));
 

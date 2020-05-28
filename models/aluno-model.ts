@@ -62,7 +62,7 @@ export = class Presenca {
 
 	public static async excluir(idAluno: number): Promise<string> {
 		let res: string = null;
-
+        console.log('idAluno ->', idAluno)
 		await sql.conectar(async (sql: sql) => {
 			await sql.query("delete from aluno where idAluno = " + idAluno);
 			res = sql.linhasAfetadas.toString();
@@ -76,7 +76,7 @@ export = class Presenca {
 		let lista: Presenca[] = null;
 
 		await sql.conectar(async (sql: sql) => {
-			lista = await sql.query("select dataNascAluno, cpfAluno, rgAluno, estadoCivilAluno, emailAluno, telefoneAluno, profissaoAluno, nomeAluno from aluno order by nomeAluno desc") as Presenca[];
+			lista = await sql.query("select idAluno, dataNascAluno, cpfAluno, rgAluno, estadoCivilAluno, emailAluno, telefoneAluno, profissaoAluno, nomeAluno from aluno order by nomeAluno desc") as Presenca[];
 		});
 
 		return (lista || []);
