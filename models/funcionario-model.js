@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const Sql = require("../infra/sql");
+const sql = require("../infra/sql");
 module.exports = class Funcionario {
     static validar(f) {
         return null;
@@ -16,11 +16,21 @@ module.exports = class Funcionario {
     static listar() {
         return __awaiter(this, void 0, void 0, function* () {
             let lista = null;
-            yield Sql.conectar((sql) => __awaiter(this, void 0, void 0, function* () {
-                lista = (yield sql.query("select idFuncionario,nomeFuncionario,dataNascFuncionario,cpfFuncionario,rgFuncionario,estadoCivilFuncionario,emailFuncionario,telefoneFuncionario,"
-                    + "atuacaoFuncionario ,cargaHorariaFuncionario,salarioFuncionario,idEndereco,numeroSisFuncionario from funcionario order by nomeFuncionario asc"));
+            yield sql.conectar((sql) => __awaiter(this, void 0, void 0, function* () {
+                lista = (yield sql.query("select idFuncionario, nomeFuncionario,cpfFuncionario,telefoneFuncionario,atuacaoFuncionario from funcionario order by nomeFuncionario asc"));
             }));
             return (lista || []);
+        });
+    }
+    static obter(idFuncionario) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let f = null;
+            let res = null;
+            yield sql.conectar((sql) => __awaiter(this, void 0, void 0, function* () {
+                f = (yield sql.query("select * from funcionario where idFuncionario = " + idFuncionario));
+                res = sql.linhasAfetadas.toString();
+            }));
+            return f[0];
         });
     }
     static criar(f) {
@@ -28,8 +38,8 @@ module.exports = class Funcionario {
             let res;
             if ((res = Funcionario.validar(f)))
                 return res;
-            yield Sql.conectar((sql) => __awaiter(this, void 0, void 0, function* () {
-                yield sql.query("insert into funcionario (nomeFuncionario,dataNascFuncionario,cpfFuncionario,rgFuncionario,estadoCivilFuncionario,emailFuncionario,telefoneFuncionario,atuacaoFuncionario ,cargaHorariaFuncionario,salarioFuncionario,idEndereco,numeroSisFuncionario) values (?,?,?,?,?,?,?,?,?,?,?,?)", [f.nomeFuncionario, f.dataNascFuncionario, f.cpfFuncionario, f.rgFuncionario, f.estadoCivilFuncionario, f.emailFuncionario, f.telefoneFuncionario, f.atuacaoFuncionario, f.cargaHorariaFuncionario, f.salarioFuncionario, f.idEndereco, f.numeroSisFuncionario]);
+            yield sql.conectar((sql) => __awaiter(this, void 0, void 0, function* () {
+                yield sql.query("insert into funcionario (nomeFuncionario,dataNascFuncionario,cpfFuncionario,rgFuncionario,estadoCivilFuncionario,emailFuncionario,telefoneFuncionario,atuacaoFuncionario ,cargaHorariaFuncionario,salarioFuncionario,idEndereco, idUsuario) values (?,?,?,?,?,?,?,?,?,?,?,?)", [f.nomeFuncionario, f.dataNascFuncionario, f.cpfFuncionario, f.rgFuncionario, f.estadoCivilFuncionario, f.emailFuncionario, f.telefoneFuncionario, f.atuacaoFuncionario, f.cargaHorariaFuncionario, f.salarioFuncionario, f.idEndereco, f.idUsuario]);
             }));
         });
     }
@@ -39,7 +49,7 @@ module.exports = class Funcionario {
             if ((res = Funcionario.validar(f)))
                 return res;
             //TO-DO ADICIONAR ID ENDERECO
-            yield Sql.conectar((sql) => __awaiter(this, void 0, void 0, function* () {
+            yield sql.conectar((sql) => __awaiter(this, void 0, void 0, function* () {
                 yield sql.query("update funcionario set nomeFuncionario = ?, dataNascFuncionario = ?, cpfFuncionario = ?, rgFuncionario = ?, estadoCivilFuncionario = ?, emailFuncionario = ?, telefoneFuncionario = ?, atuacaoFuncionario = ?, cargaHorariaFuncionario = ?, salarioFuncionario = ? where idFuncionario = ?", [f.nomeFuncionario, f.dataNascFuncionario, f.cpfFuncionario, f.rgFuncionario, f.estadoCivilFuncionario, f.emailFuncionario, f.telefoneFuncionario, f.atuacaoFuncionario, f.cargaHorariaFuncionario, f.salarioFuncionario, f.idFuncionario]);
                 res = sql.linhasAfetadas.toString();
             }));
@@ -48,7 +58,7 @@ module.exports = class Funcionario {
     static excluir(idFuncionario) {
         return __awaiter(this, void 0, void 0, function* () {
             let res = null;
-            yield Sql.conectar((sql) => __awaiter(this, void 0, void 0, function* () {
+            yield sql.conectar((sql) => __awaiter(this, void 0, void 0, function* () {
                 yield sql.query("delete from funcionario where idFuncionario = " + idFuncionario);
                 res = sql.linhasAfetadas.toString();
             }));

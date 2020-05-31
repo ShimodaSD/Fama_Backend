@@ -17,8 +17,8 @@ export = class Curso {
 			return res;
 
 		await sql.conectar(async (sql: sql) => {
-			await sql.query("insert into curso (nomeCurso,responsavelCurso,horasSemanaisCurso,descricaoCurso) values (?,?,?,?)", [c.nomeCurso,c.responsavelCurso,c.horasSemanaisCurso,c.descricaoCurso]);
-		});		
+			await sql.query("insert into curso (nomeCurso,responsavelCurso,horasSemanaisCurso,descricaoCurso) values (?,?,?,?)", [c.nomeCurso, c.responsavelCurso, c.horasSemanaisCurso, c.descricaoCurso]);
+		});
 	}
 
 
@@ -30,7 +30,7 @@ export = class Curso {
 			curso = await sql.query("select * from curso where idCurso = " + idCurso) as Curso[];
 			res = sql.linhasAfetadas.toString();
 		});
-	
+
 		return curso[0];
 	}
 
@@ -40,8 +40,8 @@ export = class Curso {
 		if ((res = Curso.validar(c)))
 			return res;
 
-		await sql.conectar(async (sql: sql) => {	
-			await sql.query("update curso set nomeCurso = ?, responsavelCurso = ?, horasSemanaisCurso = ?, descricaoCurso = ? where idCurso = ?", [c.nomeCurso,c.responsavelCurso,c.horasSemanaisCurso,c.descricaoCurso,c.idCurso]);
+		await sql.conectar(async (sql: sql) => {
+			await sql.query("update curso set nomeCurso = ?, responsavelCurso = ?, horasSemanaisCurso = ?, descricaoCurso = ? where idCurso = ?", [c.nomeCurso, c.responsavelCurso, c.horasSemanaisCurso, c.descricaoCurso, c.idCurso]);
 			res = sql.linhasAfetadas.toString();
 		});
 	}

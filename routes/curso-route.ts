@@ -7,8 +7,8 @@ const router = express.Router();
 
 // TO-DO cookies
 // let u = await Usuario.cookie(req, res, true);
-	// if (!u)
-	// 	return;
+// if (!u)
+// 	return;
 
 router.post("/criar", wrap(async (req: express.Request, res: express.Response) => {
 	let c = req.body as Curso;
@@ -19,7 +19,7 @@ router.post("/criar", wrap(async (req: express.Request, res: express.Response) =
 router.get("/obter", wrap(async (req: express.Request, res: express.Response) => {
 	let id = parseInt(req.query["idCurso"]);
 	res.json(isNaN(id) ? null : await Curso.obter(id));
-	console.log(res.statusMessage + " - " + res.statusCode) 
+	console.log(res.statusMessage + " - " + res.statusCode)
 }));
 
 

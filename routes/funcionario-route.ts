@@ -1,42 +1,44 @@
 import express = require("express");
 import wrap = require("express-async-error-wrapper");
+import { isNullOrUndefined } from "util";
 import Funcionario = require("../models/funcionario-model");
 
 const router = express.Router();
 
+// TO-DO cookies
+// let u = await Usuario.cookie(req, res, true);
+// if (!u)
+// 	return;
+
+router.post("/criar", wrap(async (req: express.Request, res: express.Response) => {
+	let c = req.body as Funcionario;
+	res.json(isNullOrUndefined(c) ? null : await Funcionario.criar(c));
+}));
+
+
+router.get("/obter", wrap(async (req: express.Request, res: express.Response) => {
+	let id = parseInt(req.query["idFuncionario"]);
+	res.json(isNaN(id) ? null : await Funcionario.obter(id));
+	console.log(res.statusMessage + " - " + res.statusCode)
+}));
+
+
+router.post("/alterar", wrap(async (req: express.Request, res: express.Response) => {
+	let c = req.body as Funcionario;
+	if (c)
+		c.idFuncionario = parseInt(req.body.idFuncionario);
+	res.json(isNaN(c.idFuncionario) ? null : await Funcionario.alterar(c));
+}));
+
+
+router.get("/excluir", wrap(async (req: express.Request, res: express.Response) => {
+	let id = parseInt(req.query["idFuncionario"]);
+	res.json(isNaN(id) ? null : await Funcionario.excluir(id));
+}));
+
+
 router.get("/listar", wrap(async (req: express.Request, res: express.Response) => {
 	res.json(await Funcionario.listar());
 }));
-
-// // router.get("/obter", wrap(async (req: express.Request, res: express.Response) => {
-// // 	let id = parseInt(req.query["id"]);
-// // 	res.json(isNaN(id) ? null : await Contato.obter(id));
-// // }));
-
-// router.post("/criar", wrap(async (req: express.Request, res: express.Response) => {
-// 	//let u = await Usuario.cookie(req, res, true);
-// 	//if (!u)
-// 	//	return;
-// 	let f = req.body as Funcionario;
-// 	res.json(res, 400, f ? await Funcionario.criar(f) : "Dados inválidos!");
-// }));
-
-// router.post("/alterar", wrap(async (req: express.Request, res: express.Response) => {
-// 	// let u = await Usuario.cookie(req, res, true);
-// 	// if (!u)
-// 	// 	return;
-// 	let f = req.body as Funcionario;
-// 	if (f)
-// 		f.idFuncionario = parseInt(req.body.idFuncionario);
-// 	res.json(res, 400, (f && !isNaN(f.idFuncionario)) ? await Funcionario.alterar(f) : "Dados inválidos!"+(f.idFuncionario));
-// }));
-
-// router.get("/excluir", wrap(async (req: express.Request, res: express.Response) => {
-// 	// let u = await Usuario.cookie(req, res, true);
-// 	// if (!u)
-// 	// 	return;
-// 	let idFuncionario = parseInt(req.query["idFuncionario"]);
-// 	res.json(res, 400, isNaN(idFuncionario) ? "Dados inválidos!" : await Funcionario.excluir(idFuncionario));
-// }));
 
 export = router;
