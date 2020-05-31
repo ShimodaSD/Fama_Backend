@@ -62,7 +62,6 @@ export = class Presenca {
 
 	public static async excluir(idAluno: number): Promise<string> {
 		let res: string = null;
-        console.log('idAluno ->', idAluno)
 		await sql.conectar(async (sql: sql) => {
 			await sql.query("delete from aluno where idAluno = " + idAluno);
 			res = sql.linhasAfetadas.toString();

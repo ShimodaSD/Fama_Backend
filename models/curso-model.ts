@@ -22,20 +22,16 @@ export = class Curso {
 	}
 
 
-	public static async obter(id: number): Promise<Curso> {
-		let lista: Curso[] = null;
+	public static async obter(idCurso: number): Promise<Curso> {
+		let curso: Curso[] = null
+		let res: string = null;
 
 		await sql.conectar(async (sql: sql) => {
-			lista = await sql.query("select * from curso where id = ?",[id]) as Curso[];
+			curso = await sql.query("select * from curso where idCurso = " + idCurso) as Curso[];
+			res = sql.linhasAfetadas.toString();
 		});
-
-		if (lista && lista[0]) {
-			return lista[0];
-		}else {
-			return null;
-		}
-
-		//return ((lista && lista[0]) || null);
+	
+		return curso[0];
 	}
 
 
@@ -67,8 +63,7 @@ export = class Curso {
 		let lista: Curso[] = null;
 
 		await sql.conectar(async (sql: sql) => {
-			lista = await sql.query("select idCurso, nomeCurso, responsavelCurso, horasSemanaisCurso, "
-			+ " descricaoCurso from curso order by idCurso asc") as Curso[];
+			lista = await sql.query("SELECT idCurso, nomeCurso, responsavelCurso, horasSemanaisCurso FROM curso ORDER BY nomeCurso asc") as Curso[];
 		});
 
 		return (lista || []);

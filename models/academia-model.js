@@ -8,12 +8,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const Sql = require("../infra/sql");
+const sql = require("../infra/sql");
 module.exports = class Presenca {
     static listar(id) {
         return __awaiter(this, void 0, void 0, function* () {
             let lista = null;
-            yield Sql.conectar((sql) => __awaiter(this, void 0, void 0, function* () {
+            yield sql.conectar((sql) => __awaiter(this, void 0, void 0, function* () {
                 lista = (yield sql.query("select * from usuario inner join funcionario on (funcionario.idUsuario = usuario.idUsuario) inner join curso_has_funcionario on (curso_has_funcionario.idFuncionario = funcionario.idFuncionario) inner join curso on (curso.idCurso = curso_has_funcionario.idCurso) inner join aula on (aula.idCurso = curso.idCurso) inner join aluno_has_aula on (aluno_has_aula.idAula = aula.idAula) where idUsuario = ?", [id]));
             }));
             return (lista || []);

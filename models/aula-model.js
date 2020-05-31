@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const Sql = require("../infra/sql");
+const sql = require("../infra/sql");
 module.exports = class Aula {
     // private static validar(c: Contato): string {
     // 	c.nome = (c.nome || "").trim().toUpperCase();
@@ -27,7 +27,7 @@ module.exports = class Aula {
     static listar() {
         return __awaiter(this, void 0, void 0, function* () {
             let lista = null;
-            yield Sql.conectar((sql) => __awaiter(this, void 0, void 0, function* () {
+            yield sql.conectar((sql) => __awaiter(this, void 0, void 0, function* () {
                 lista = (yield sql.query("select idAula, nomeAula, horarioAula, idCurso "
                     + " from aula order by nomeAula asc"));
             }));

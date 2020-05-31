@@ -27,7 +27,6 @@ router.get("/listar", wrap(async (req: express.Request, res: express.Response) =
 // 	// 	return;
 // 	let f = req.body as Funcionario;
 // 	if (f)
-// 		console.log(f)
 // 		f.idFuncionario = parseInt(req.body.idFuncionario);
 // 	res.json(res, 400, (f && !isNaN(f.idFuncionario)) ? await Funcionario.alterar(f) : "Dados inválidos!"+(f.idFuncionario));
 // }));

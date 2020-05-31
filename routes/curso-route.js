@@ -22,15 +22,14 @@ router.post("/criar", wrap((req, res) => __awaiter(void 0, void 0, void 0, funct
     res.json(util_1.isNullOrUndefined(c) ? null : yield Curso.criar(c));
 })));
 router.get("/obter", wrap((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    let id = parseInt(req.query["id"]);
-    // to-do: understand res.json
+    let id = parseInt(req.query["idCurso"]);
     res.json(isNaN(id) ? null : yield Curso.obter(id));
+    console.log(res.statusMessage + " - " + res.statusCode);
 })));
 router.post("/alterar", wrap((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let c = req.body;
     if (c)
-        console.log(c);
-    c.idCurso = parseInt(req.body.idCurso);
+        c.idCurso = parseInt(req.body.idCurso);
     res.json(isNaN(c.idCurso) ? null : yield Curso.alterar(c));
 })));
 router.get("/excluir", wrap((req, res) => __awaiter(void 0, void 0, void 0, function* () {

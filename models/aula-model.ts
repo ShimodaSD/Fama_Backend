@@ -1,4 +1,4 @@
-﻿import Sql = require("../infra/sql");
+﻿import sql = require("../infra/sql");
 
 export = class Aula {
 	public idAula: number;
@@ -24,7 +24,7 @@ export = class Aula {
 	public static async listar(): Promise<Aula[]> {
 		let lista: Aula[] = null;
 
-		await Sql.conectar(async (sql: Sql) => {
+		await sql.conectar(async (sql: sql) => {
 			lista = await sql.query("select idAula, nomeAula, horarioAula, idCurso "
 			+ " from aula order by nomeAula asc") as Aula[];
 		});
@@ -35,7 +35,7 @@ export = class Aula {
 	// public static async obter(id: number): Promise<Contato> {
 	// 	let lista: Contato[] = null;
 
-	// 	await Sql.conectar(async (sql: Sql) => {
+	// 	await sql.conectar(async (sql: sql) => {
 	// 		lista = await sql.query("select id, nome, endereco, email, peso from contato where id = ?",[id]) as Contato[];
 	// 	});
 
@@ -53,7 +53,7 @@ export = class Aula {
 	// 	if ((res = Contato.validar(c)))
 	// 		return res;
 
-	// 	await Sql.conectar(async (sql: Sql) => {
+	// 	await sql.conectar(async (sql: sql) => {
 	// 			await sql.query("insert into contato (nome,endereco,email,peso) values (?,?,?,?)", [c.nome,c.endereco,c.email,c.peso]);
 	// 	});
 
@@ -65,7 +65,7 @@ export = class Aula {
 	// 	if ((res = Contato.validar(c)))
 	// 		return res;
 
-	// 	await Sql.conectar(async (sql: Sql) => {	
+	// 	await sql.conectar(async (sql: sql) => {	
 	// 			await sql.query("update contato set nome = ?, endereco = ?, email = ?, peso = ? where id = ?", [c.nome,c.endereco,c.email,c.peso,c.id]);
 	// 			res = sql.linhasAfetadas.toString();
 	// 	});
@@ -76,7 +76,7 @@ export = class Aula {
 	// public static async excluir(id: number): Promise<string> {
 	// 	let res: string = null;
 
-	// 	await Sql.conectar(async (sql: Sql) => {
+	// 	await sql.conectar(async (sql: sql) => {
 	// 		await sql.query("delete from contato where id = " + id);
 	// 		res = sql.linhasAfetadas.toString();
 	// 	});

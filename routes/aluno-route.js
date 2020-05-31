@@ -29,8 +29,7 @@ router.get("/obter", wrap((req, res) => __awaiter(void 0, void 0, void 0, functi
 router.post("/alterar", wrap((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let a = req.body;
     if (a)
-        console.log(a);
-    a.idAluno = parseInt(req.body.idPresenca);
+        a.idAluno = parseInt(req.body.idPresenca);
     res.json(isNaN(a.idAluno) ? null : yield Presenca.alterar(a));
 })));
 router.get("/excluir", wrap((req, res) => __awaiter(void 0, void 0, void 0, function* () {

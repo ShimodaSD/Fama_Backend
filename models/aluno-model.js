@@ -54,7 +54,6 @@ module.exports = class Presenca {
     static excluir(idAluno) {
         return __awaiter(this, void 0, void 0, function* () {
             let res = null;
-            console.log('idAluno ->', idAluno);
             yield sql.conectar((sql) => __awaiter(this, void 0, void 0, function* () {
                 yield sql.query("delete from aluno where idAluno = " + idAluno);
                 res = sql.linhasAfetadas.toString();

@@ -23,19 +23,15 @@ module.exports = class Curso {
             }));
         });
     }
-    static obter(id) {
+    static obter(idCurso) {
         return __awaiter(this, void 0, void 0, function* () {
-            let lista = null;
+            let curso = null;
+            let res = null;
             yield sql.conectar((sql) => __awaiter(this, void 0, void 0, function* () {
-                lista = (yield sql.query("select * from curso where id = ?", [id]));
+                curso = (yield sql.query("select * from curso where idCurso = " + idCurso));
+                res = sql.linhasAfetadas.toString();
             }));
-            if (lista && lista[0]) {
-                return lista[0];
-            }
-            else {
-                return null;
-            }
-            //return ((lista && lista[0]) || null);
+            return curso[0];
         });
     }
     static alterar(c) {
@@ -63,8 +59,7 @@ module.exports = class Curso {
         return __awaiter(this, void 0, void 0, function* () {
             let lista = null;
             yield sql.conectar((sql) => __awaiter(this, void 0, void 0, function* () {
-                lista = (yield sql.query("select idCurso, nomeCurso, responsavelCurso, horasSemanaisCurso, "
-                    + " descricaoCurso from curso order by idCurso asc"));
+                lista = (yield sql.query("SELECT idCurso, nomeCurso, responsavelCurso, horasSemanaisCurso FROM curso ORDER BY nomeCurso asc"));
             }));
             return (lista || []);
         });
