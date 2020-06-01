@@ -2,7 +2,6 @@
 import wrap = require("express-async-error-wrapper");
 import { isNullOrUndefined } from "util";
 import Curso = require("../models/curso-model");
-import Aula = require("../models/aula-model");
 
 const router = express.Router();
 
