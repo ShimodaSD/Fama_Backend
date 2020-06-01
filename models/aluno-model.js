@@ -25,19 +25,15 @@ module.exports = class Presenca {
             }));
         });
     }
-    static obter(id) {
+    static obter(idAluno) {
         return __awaiter(this, void 0, void 0, function* () {
-            let lista = null;
+            let a = null;
+            let res = null;
             yield sql.conectar((sql) => __awaiter(this, void 0, void 0, function* () {
-                lista = (yield sql.query("select * from aluno where id = ?", [id]));
+                a = (yield sql.query("select idAluno, nomeAluno, DATE_FORMAT(dataNascAluno, '%d/%m/%Y') as dataNascAluno,cpfAluno,rgAluno,estadoCivilAluno,emailAluno,telefoneAluno,profissaoAluno,idEndereco,idUsuario from aluno where idAluno = " + idAluno));
+                res = sql.linhasAfetadas.toString();
             }));
-            if (lista && lista[0]) {
-                return lista[0];
-            }
-            else {
-                return null;
-            }
-            //return ((lista && lista[0]) || null);
+            return a[0];
         });
     }
     static alterar(p) {
@@ -46,7 +42,7 @@ module.exports = class Presenca {
             if ((res = Presenca.validar(p)))
                 return res;
             yield sql.conectar((sql) => __awaiter(this, void 0, void 0, function* () {
-                yield sql.query("update aluno set dataNascAluno=?, cpfAluno=?, rgAluno=?, estadoCivilAluno=?, emailAluno=?, telefoneAluno=?, profissaoAluno=?, nomeAluno=?, idEndereco=? where idAluno = ?", [p.dataNascAluno, p.cpfAluno, p.rgAluno, p.estadoCivilAluno, p.emailAluno, p.telefoneAluno, p.profissaoAluno, p.nomeAluno, p.idEndereco, p.idUsuario]);
+                yield sql.query("update aluno set nomeAluno = ?, dataNascAluno = STR_TO_DATE(?, '%d/%m/%Y'), cpfAluno = ?, rgAluno = ?, estadoCivilAluno = ?, emailAluno = ?, telefoneAluno = ?, profissaoAluno = ? where idAluno = ?", [p.nomeAluno, p.dataNascAluno, p.cpfAluno, p.rgAluno, p.estadoCivilAluno, p.emailAluno, p.telefoneAluno, p.profissaoAluno, p.idAluno]);
                 res = sql.linhasAfetadas.toString();
             }));
         });
@@ -65,7 +61,7 @@ module.exports = class Presenca {
         return __awaiter(this, void 0, void 0, function* () {
             let lista = null;
             yield sql.conectar((sql) => __awaiter(this, void 0, void 0, function* () {
-                lista = (yield sql.query("select idAluno, dataNascAluno, cpfAluno, rgAluno, estadoCivilAluno, emailAluno, telefoneAluno, profissaoAluno, nomeAluno from aluno order by nomeAluno desc"));
+                lista = (yield sql.query("select idAluno, nomeAluno, cpfAluno, telefoneAluno from aluno order by nomeAluno asc"));
             }));
             return (lista || []);
         });

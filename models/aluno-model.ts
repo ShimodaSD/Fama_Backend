@@ -30,20 +30,16 @@ export = class Presenca {
 	}
 
 
-	public static async obter(id: number): Promise<Presenca> {
-		let lista: Presenca[] = null;
+	public static async obter(idAluno: number): Promise<Presenca> {
+		let a: Presenca[] = null
+		let res: string = null;
 
 		await sql.conectar(async (sql: sql) => {
-			lista = await sql.query("select * from aluno where id = ?",[id]) as Presenca[];
+			a = await sql.query("select idAluno, nomeAluno, DATE_FORMAT(dataNascAluno, '%d/%m/%Y') as dataNascAluno,cpfAluno,rgAluno,estadoCivilAluno,emailAluno,telefoneAluno,profissaoAluno,idEndereco,idUsuario from aluno where idAluno = " + idAluno) as Presenca[];
+			res = sql.linhasAfetadas.toString();
 		});
 
-		if (lista && lista[0]) {
-			return lista[0];
-		}else {
-			return null;
-		}
-
-		//return ((lista && lista[0]) || null);
+		return a[0];
 	}
 
 
@@ -52,9 +48,9 @@ export = class Presenca {
 		if ((res = Presenca.validar(p)))
 			return res;
 
-		await sql.conectar(async (sql: sql) => {	
-            await sql.query("update aluno set dataNascAluno=?, cpfAluno=?, rgAluno=?, estadoCivilAluno=?, emailAluno=?, telefoneAluno=?, profissaoAluno=?, nomeAluno=?, idEndereco=? where idAluno = ?", 
-            [p.dataNascAluno, p.cpfAluno, p.rgAluno, p.estadoCivilAluno, p.emailAluno, p.telefoneAluno, p.profissaoAluno, p.nomeAluno, p.idEndereco, p.idUsuario]);
+		await sql.conectar(async (sql: sql) => {
+			await sql.query("update aluno set nomeAluno = ?, dataNascAluno = STR_TO_DATE(?, '%d/%m/%Y'), cpfAluno = ?, rgAluno = ?, estadoCivilAluno = ?, emailAluno = ?, telefoneAluno = ?, profissaoAluno = ? where idAluno = ?", 
+			[p.nomeAluno, p.dataNascAluno, p.cpfAluno, p.rgAluno, p.estadoCivilAluno, p.emailAluno, p.telefoneAluno, p.profissaoAluno, p.idAluno]);
 			res = sql.linhasAfetadas.toString();
 		});
 	}
@@ -75,7 +71,7 @@ export = class Presenca {
 		let lista: Presenca[] = null;
 
 		await sql.conectar(async (sql: sql) => {
-			lista = await sql.query("select idAluno, dataNascAluno, cpfAluno, rgAluno, estadoCivilAluno, emailAluno, telefoneAluno, profissaoAluno, nomeAluno from aluno order by nomeAluno desc") as Presenca[];
+			lista = await sql.query("select idAluno, nomeAluno, cpfAluno, telefoneAluno from aluno order by nomeAluno asc") as Presenca[];
 		});
 
 		return (lista || []);

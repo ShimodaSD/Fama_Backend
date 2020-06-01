@@ -68,8 +68,6 @@ export = class Funcionario {
 			await sql.query("update funcionario set nomeFuncionario = ?, dataNascFuncionario = STR_TO_DATE(?, '%d/%m/%Y'), cpfFuncionario = ?, rgFuncionario = ?, estadoCivilFuncionario = ?, emailFuncionario = ?, telefoneFuncionario = ?, atuacaoFuncionario = ?, cargaHorariaFuncionario = ?, salarioFuncionario = ?, formacaoFuncionario = ? where idFuncionario = ?", [f.nomeFuncionario, f.dataNascFuncionario, f.cpfFuncionario, f.rgFuncionario, f.estadoCivilFuncionario, f.emailFuncionario, f.telefoneFuncionario, f.atuacaoFuncionario, f.cargaHorariaFuncionario, f.salarioFuncionario, f.formacaoFuncionario, f.idFuncionario]);
 			res = sql.linhasAfetadas.toString();
 		});
-
-
 	}
 
 	public static async excluir(idFuncionario: number): Promise<string> {
