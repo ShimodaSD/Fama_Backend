@@ -27,7 +27,7 @@ module.exports = class Funcionario {
             let f = null;
             let res = null;
             yield sql.conectar((sql) => __awaiter(this, void 0, void 0, function* () {
-                f = (yield sql.query("select * from funcionario where idFuncionario = " + idFuncionario));
+                f = (yield sql.query("select idFuncionario, nomeFuncionario, DATE_FORMAT(dataNascFuncionario, '%d/%m/%Y') as dataNascFuncionario,cpfFuncionario,rgFuncionario,estadoCivilFuncionario,emailFuncionario,telefoneFuncionario,atuacaoFuncionario,cargaHorariaFuncionario,salarioFuncionario,formacaoFuncionario,idEndereco,idUsuario from funcionario where idFuncionario = " + idFuncionario));
                 res = sql.linhasAfetadas.toString();
             }));
             return f[0];
@@ -39,7 +39,8 @@ module.exports = class Funcionario {
             if ((res = Funcionario.validar(f)))
                 return res;
             yield sql.conectar((sql) => __awaiter(this, void 0, void 0, function* () {
-                yield sql.query("insert into funcionario (nomeFuncionario,dataNascFuncionario,cpfFuncionario,rgFuncionario,estadoCivilFuncionario,emailFuncionario,telefoneFuncionario,atuacaoFuncionario ,cargaHorariaFuncionario,salarioFuncionario,idEndereco, idUsuario) values (?,?,?,?,?,?,?,?,?,?,?,?)", [f.nomeFuncionario, f.dataNascFuncionario, f.cpfFuncionario, f.rgFuncionario, f.estadoCivilFuncionario, f.emailFuncionario, f.telefoneFuncionario, f.atuacaoFuncionario, f.cargaHorariaFuncionario, f.salarioFuncionario, f.idEndereco, f.idUsuario]);
+                yield sql.query("insert into funcionario (nomeFuncionario,dataNascFuncionario,cpfFuncionario,rgFuncionario,estadoCivilFuncionario,emailFuncionario,telefoneFuncionario,atuacaoFuncionario ,cargaHorariaFuncionario,salarioFuncionario,formacaoFuncionario,idEndereco,idUsuario)"
+                    + "values (?,STR_TO_DATE(?, '%d/%m/%Y'),?,?,?,?,?,?,?,?,?,2,2);", [f.nomeFuncionario, f.dataNascFuncionario, f.cpfFuncionario, f.rgFuncionario, f.estadoCivilFuncionario, f.emailFuncionario, f.telefoneFuncionario, f.atuacaoFuncionario, f.cargaHorariaFuncionario, f.salarioFuncionario, f.formacaoFuncionario]);
             }));
         });
     }
@@ -50,7 +51,7 @@ module.exports = class Funcionario {
                 return res;
             //TO-DO ADICIONAR ID ENDERECO
             yield sql.conectar((sql) => __awaiter(this, void 0, void 0, function* () {
-                yield sql.query("update funcionario set nomeFuncionario = ?, dataNascFuncionario = ?, cpfFuncionario = ?, rgFuncionario = ?, estadoCivilFuncionario = ?, emailFuncionario = ?, telefoneFuncionario = ?, atuacaoFuncionario = ?, cargaHorariaFuncionario = ?, salarioFuncionario = ? where idFuncionario = ?", [f.nomeFuncionario, f.dataNascFuncionario, f.cpfFuncionario, f.rgFuncionario, f.estadoCivilFuncionario, f.emailFuncionario, f.telefoneFuncionario, f.atuacaoFuncionario, f.cargaHorariaFuncionario, f.salarioFuncionario, f.idFuncionario]);
+                yield sql.query("update funcionario set nomeFuncionario = ?, dataNascFuncionario = STR_TO_DATE(?, '%d/%m/%Y'), cpfFuncionario = ?, rgFuncionario = ?, estadoCivilFuncionario = ?, emailFuncionario = ?, telefoneFuncionario = ?, atuacaoFuncionario = ?, cargaHorariaFuncionario = ?, salarioFuncionario = ?, formacaoFuncionario = ? where idFuncionario = ?", [f.nomeFuncionario, f.dataNascFuncionario, f.cpfFuncionario, f.rgFuncionario, f.estadoCivilFuncionario, f.emailFuncionario, f.telefoneFuncionario, f.atuacaoFuncionario, f.cargaHorariaFuncionario, f.salarioFuncionario, f.formacaoFuncionario, f.idFuncionario]);
                 res = sql.linhasAfetadas.toString();
             }));
         });

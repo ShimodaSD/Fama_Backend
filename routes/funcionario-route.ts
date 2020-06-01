@@ -19,15 +19,12 @@ router.post("/criar", wrap(async (req: express.Request, res: express.Response) =
 router.get("/obter", wrap(async (req: express.Request, res: express.Response) => {
 	let id = parseInt(req.query["idFuncionario"]);
 	res.json(isNaN(id) ? null : await Funcionario.obter(id));
-	console.log(res.statusMessage + " - " + res.statusCode)
 }));
 
 
 router.post("/alterar", wrap(async (req: express.Request, res: express.Response) => {
-	let c = req.body as Funcionario;
-	if (c)
-		c.idFuncionario = parseInt(req.body.idFuncionario);
-	res.json(isNaN(c.idFuncionario) ? null : await Funcionario.alterar(c));
+	let f = req.body as Funcionario;
+	res.json(isNaN(f.idFuncionario) ? null : await Funcionario.alterar(f));
 }));
 
 

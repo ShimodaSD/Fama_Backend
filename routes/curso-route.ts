@@ -19,7 +19,6 @@ router.post("/criar", wrap(async (req: express.Request, res: express.Response) =
 router.get("/obter", wrap(async (req: express.Request, res: express.Response) => {
 	let id = parseInt(req.query["idCurso"]);
 	res.json(isNaN(id) ? null : await Curso.obter(id));
-	console.log(res.statusMessage + " - " + res.statusCode)
 }));
 
 
