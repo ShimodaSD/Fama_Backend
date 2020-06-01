@@ -2,85 +2,67 @@
 
 export = class Aula {
 	public idAula: number;
-	public nomeAula: string;
-	public horarioAula: string;
-	public idCurso: number;
+	public idCurso: string;
+	public cdDia: string;
+	public dsDia: string;
+	public hrInicio: string;
+	public hrFim: string;
+	public duracao: string;
 
-	// private static validar(c: Contato): string {
-	// 	c.nome = (c.nome || "").trim().toUpperCase();
-	// 	if (c.nome.length < 3 || c.nome.length > 200)
-	// 		return "Nome inválido";
-	// 	c.endereco = (c.endereco || "").trim().toUpperCase();
-	// 	if (c.endereco.length < 3 || c.endereco.length > 200)
-	// 		return "Endereço inválido";	
-	// 	c.email = (c.email || "").trim().toUpperCase();
-	// 	if (c.email.length < 3 || c.email.length > 200)
-	// 			return "Email inválido";
-	// 	if (c.peso <= 0)
-	// 		return "Peso inválido!";
-	// 	return null;
-	// }
+	private static validar(a: Aula): string {
+		return null;
+	}
 
-	public static async listar(): Promise<Aula[]> {
+	public static async listar(idCurso: number): Promise<Aula[]> {
 		let lista: Aula[] = null;
 
 		await sql.conectar(async (sql: sql) => {
-			lista = await sql.query("select idAula, nomeAula, horarioAula, idCurso "
-			+ " from aula order by nomeAula asc") as Aula[];
+			lista = await sql.query("select idAula, idCurso, cdDia, hrInicio, hrFim, TIMEDIFF(hrFim, hrInicio) as duracao from aula where idCurso = " + idCurso) as Aula[];
 		});
 
 		return (lista || []);
 	}
 
-	// public static async obter(id: number): Promise<Contato> {
-	// 	let lista: Contato[] = null;
+	public static async criar(a: Aula): Promise<string> {
+		let res: string;
+		if ((res = Aula.validar(a)))
+			return res;
 
-	// 	await sql.conectar(async (sql: sql) => {
-	// 		lista = await sql.query("select id, nome, endereco, email, peso from contato where id = ?",[id]) as Contato[];
-	// 	});
+		await sql.conectar(async (sql: sql) => {
+			await sql.query("insert into aula (cdDia, hrInicio, hrFim) values (?, TIME_FORMAT(?, '%H/%i/%S'), TIME_FORMAT(?, '%H/%i/%S'))", 
+				[a.cdDia, a.hrInicio, a.hrFim]);
+		});
+	}
 
-	// 	if (lista && lista[0]) {
-	// 		return lista[0];
-	// 	}else {
-	// 		return null;
-	// 	}
+	public static async alterar(a: Aula): Promise<string> {
+		let res: string;
+		if ((res = Aula.validar(a)))
+			return res;
 
-	// 	//return ((lista && lista[0]) || null);
-	// }
+		await sql.conectar(async (sql: sql) => {
+			await sql.query("update aula set cdDia = ?, hrInicio = ?, hrFim = ? where idAula = ?", [a.cdDia, a.hrInicio, a.hrFim, a.idCurso]);
+			res = sql.linhasAfetadas.toString();
+		});
+	}
 
-	// public static async criar(c: Contato): Promise<string> {
-	// 	let res: string;
-	// 	if ((res = Contato.validar(c)))
-	// 		return res;
 
-	// 	await sql.conectar(async (sql: sql) => {
-	// 			await sql.query("insert into contato (nome,endereco,email,peso) values (?,?,?,?)", [c.nome,c.endereco,c.email,c.peso]);
-	// 	});
+	public static async excluir(idAula: number): Promise<string> {
+		let res: string = null;
 
-		
-	// }
+		await sql.conectar(async (sql: sql) => {
+			await sql.query("delete from aula where idAula = " + idAula);
+			res = sql.linhasAfetadas.toString();
+		});
 
-	// public static async alterar(c: Contato): Promise<string> {
-	// 	let res: string;
-	// 	if ((res = Contato.validar(c)))
-	// 		return res;
+		return res;
+	}
 
-	// 	await sql.conectar(async (sql: sql) => {	
-	// 			await sql.query("update contato set nome = ?, endereco = ?, email = ?, peso = ? where id = ?", [c.nome,c.endereco,c.email,c.peso,c.id]);
-	// 			res = sql.linhasAfetadas.toString();
-	// 	});
+	public static async diasSemana(): Promise<Aula[]> {
+		let lista: Aula[]
+		await sql.conectar(async (sql: sql) => {
+			lista = await sql.query("select cdDia, dsDia from dias") as Aula[];
+		});
 
-		
-	// }
-
-	// public static async excluir(id: number): Promise<string> {
-	// 	let res: string = null;
-
-	// 	await sql.conectar(async (sql: sql) => {
-	// 		await sql.query("delete from contato where id = " + id);
-	// 		res = sql.linhasAfetadas.toString();
-	// 	});
-
-	// 	return res;
-	// }
+		return (lista || []);
+	}
 }

@@ -10,26 +10,54 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 const sql = require("../infra/sql");
 module.exports = class Aula {
-    // private static validar(c: Contato): string {
-    // 	c.nome = (c.nome || "").trim().toUpperCase();
-    // 	if (c.nome.length < 3 || c.nome.length > 200)
-    // 		return "Nome inválido";
-    // 	c.endereco = (c.endereco || "").trim().toUpperCase();
-    // 	if (c.endereco.length < 3 || c.endereco.length > 200)
-    // 		return "Endereço inválido";	
-    // 	c.email = (c.email || "").trim().toUpperCase();
-    // 	if (c.email.length < 3 || c.email.length > 200)
-    // 			return "Email inválido";
-    // 	if (c.peso <= 0)
-    // 		return "Peso inválido!";
-    // 	return null;
-    // }
-    static listar() {
+    static validar(a) {
+        return null;
+    }
+    static listar(idCurso) {
         return __awaiter(this, void 0, void 0, function* () {
             let lista = null;
             yield sql.conectar((sql) => __awaiter(this, void 0, void 0, function* () {
-                lista = (yield sql.query("select idAula, nomeAula, horarioAula, idCurso "
-                    + " from aula order by nomeAula asc"));
+                lista = (yield sql.query("select idAula, idCurso, cdDia, hrInicio, hrFim, TIMEDIFF(hrFim, hrInicio) as duracao from aula where idCurso = " + idCurso));
+            }));
+            return (lista || []);
+        });
+    }
+    static criar(a) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let res;
+            if ((res = Aula.validar(a)))
+                return res;
+            yield sql.conectar((sql) => __awaiter(this, void 0, void 0, function* () {
+                yield sql.query("insert into aula (cdDia, hrInicio, hrFim) values (?, TIME_FORMAT(?, '%H/%i/%S'), TIME_FORMAT(?, '%H/%i/%S'))", [a.cdDia, a.hrInicio, a.hrFim]);
+            }));
+        });
+    }
+    static alterar(a) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let res;
+            if ((res = Aula.validar(a)))
+                return res;
+            yield sql.conectar((sql) => __awaiter(this, void 0, void 0, function* () {
+                yield sql.query("update aula set cdDia = ?, hrInicio = ?, hrFim = ? where idAula = ?", [a.cdDia, a.hrInicio, a.hrFim, a.idCurso]);
+                res = sql.linhasAfetadas.toString();
+            }));
+        });
+    }
+    static excluir(idAula) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let res = null;
+            yield sql.conectar((sql) => __awaiter(this, void 0, void 0, function* () {
+                yield sql.query("delete from aula where idAula = " + idAula);
+                res = sql.linhasAfetadas.toString();
+            }));
+            return res;
+        });
+    }
+    static diasSemana() {
+        return __awaiter(this, void 0, void 0, function* () {
+            let lista;
+            yield sql.conectar((sql) => __awaiter(this, void 0, void 0, function* () {
+                lista = (yield sql.query("select cdDia, dsDia from dias"));
             }));
             return (lista || []);
         });

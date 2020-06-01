@@ -10,10 +10,30 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 const express = require("express");
 const wrap = require("express-async-error-wrapper");
+const util_1 = require("util");
 const Aula = require("../models/aula-model");
 const router = express.Router();
+router.post("/dias_da_semana", wrap((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let a = req.body;
+    res.json(util_1.isNullOrUndefined(a) ? null : yield Aula.diasSemana());
+})));
+router.post("/criar", wrap((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let a = req.body;
+    res.json(util_1.isNullOrUndefined(a) ? null : yield Aula.criar(a));
+})));
+router.post("/alterar", wrap((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let a = req.body;
+    if (a)
+        a.idAula = parseInt(req.body.idCurso);
+    res.json(isNaN(a.idAula) ? null : yield Aula.alterar(a));
+})));
+router.get("/excluir", wrap((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let id = parseInt(req.query["idAula"]);
+    res.json(isNaN(id) ? null : yield Aula.excluir(id));
+})));
 router.get("/listar", wrap((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    res.json(yield Aula.listar());
+    let id = parseInt(req.query["idCurso"]);
+    res.json(yield Aula.listar(id));
 })));
 module.exports = router;
 //# sourceMappingURL=aula-route.js.map
