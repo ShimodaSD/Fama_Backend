@@ -5,7 +5,7 @@ import Aula = require("../models/aula-model");
 
 const router = express.Router();
 
-router.post("/dias", wrap(async (req: express.Request, res: express.Response) => {
+router.get("/dias", wrap(async (req: express.Request, res: express.Response) => {
 	let a = req.body as Aula;
 	res.json(isNullOrUndefined(a) ? null : await Aula.diasSemana());
 }));

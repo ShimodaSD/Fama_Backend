@@ -13,7 +13,7 @@ const wrap = require("express-async-error-wrapper");
 const util_1 = require("util");
 const Aula = require("../models/aula-model");
 const router = express.Router();
-router.post("/dias", wrap((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.get("/dias", wrap((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let a = req.body;
     res.json(util_1.isNullOrUndefined(a) ? null : yield Aula.diasSemana());
 })));
