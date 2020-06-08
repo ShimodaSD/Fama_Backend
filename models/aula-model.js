@@ -17,7 +17,7 @@ module.exports = class Aula {
         return __awaiter(this, void 0, void 0, function* () {
             let lista = null;
             yield sql.conectar((sql) => __awaiter(this, void 0, void 0, function* () {
-                lista = (yield sql.query("select idAula, idCurso, cdDia, hrInicio, hrFim, TIMEDIFF(hrFim, hrInicio) as duracao from aula where idCurso = " + idCurso));
+                lista = (yield sql.query("select idAula, idCurso, aula.cdDia, dsDia, TIME_FORMAT(hrInicio, '%H:%i') as hrInicio, TIME_FORMAT(hrFim, '%H:%i') as hrFim, TIMEDIFF(hrFim, hrInicio) as duracao from aula left join dias on dias.cdDia = aula.cdDia where idCurso = " + idCurso));
             }));
             return (lista || []);
         });
@@ -28,7 +28,7 @@ module.exports = class Aula {
             if ((res = Aula.validar(a)))
                 return res;
             yield sql.conectar((sql) => __awaiter(this, void 0, void 0, function* () {
-                yield sql.query("insert into aula (cdDia, hrInicio, hrFim) values (?, TIME_FORMAT(?, '%H/%i/%S'), TIME_FORMAT(?, '%H/%i/%S'))", [a.cdDia, a.hrInicio, a.hrFim]);
+                yield sql.query("insert into aula (idCurso, cdDia, hrInicio, hrFim) values (?, ?, TIME_FORMAT(?, '%H:%i'), TIME_FORMAT(?, '%H:%i'))", [a.idCurso, a.cdDia, a.hrInicio, a.hrFim]);
             }));
         });
     }

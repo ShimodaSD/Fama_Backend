@@ -17,7 +17,7 @@ export = class Aula {
 		let lista: Aula[] = null;
 
 		await sql.conectar(async (sql: sql) => {
-			lista = await sql.query("select idAula, idCurso, cdDia, hrInicio, hrFim, TIMEDIFF(hrFim, hrInicio) as duracao from aula where idCurso = " + idCurso) as Aula[];
+			lista = await sql.query("select idAula, idCurso, aula.cdDia, dsDia, TIME_FORMAT(hrInicio, '%H:%i') as hrInicio, TIME_FORMAT(hrFim, '%H:%i') as hrFim, TIMEDIFF(hrFim, hrInicio) as duracao from aula left join dias on dias.cdDia = aula.cdDia where idCurso = " + idCurso) as Aula[];
 		});
 
 		return (lista || []);
@@ -29,8 +29,8 @@ export = class Aula {
 			return res;
 
 		await sql.conectar(async (sql: sql) => {
-			await sql.query("insert into aula (cdDia, hrInicio, hrFim) values (?, TIME_FORMAT(?, '%H/%i/%S'), TIME_FORMAT(?, '%H/%i/%S'))", 
-				[a.cdDia, a.hrInicio, a.hrFim]);
+			await sql.query("insert into aula (idCurso, cdDia, hrInicio, hrFim) values (?, ?, TIME_FORMAT(?, '%H:%i'), TIME_FORMAT(?, '%H:%i'))", 
+				[a.idCurso, a.cdDia, a.hrInicio, a.hrFim]);
 		});
 	}
 
