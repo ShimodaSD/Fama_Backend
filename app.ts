@@ -96,6 +96,7 @@ app.use("/api/curso", require("./routes/curso-route"));
 app.use("/api/aula", require("./routes/aula-route"));
 app.use("/api/funcionario", require("./routes/funcionario-route"));
 app.use("/api/aluno", require("./routes/aluno-route"));
+app.use("/api/matricula", require("./routes/matricula-route"));
 // Depois de registrados todos os caminhos das rotas e seus
 // tratadores, registramos os tratadores que serão chamados
 // caso nenhum dos tratadores anteriores tenha devolvido alguma

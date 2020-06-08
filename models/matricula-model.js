@@ -10,14 +10,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 const sql = require("../infra/sql");
 module.exports = class Presenca {
-    static listar(id) {
+    static adicionar(p) {
         return __awaiter(this, void 0, void 0, function* () {
-            let lista = null;
+            let res;
+            // if ((res = Presenca.validar(aulas)))
+            // 	return res;
             yield sql.conectar((sql) => __awaiter(this, void 0, void 0, function* () {
-                lista = (yield sql.query("select * from usuario inner join funcionario on (funcionario.idUsuario = usuario.idUsuario) inner join curso_has_funcionario on (curso_has_funcionario.idFuncionario = funcionario.idFuncionario) inner join curso on (curso.idCurso = curso_has_funcionario.idCurso) inner join aula on (aula.idCurso = curso.idCurso) inner join aluno_has_aula on (aluno_has_aula.idAula = aula.idAula) where idUsuario = ?", [id]));
+                p.idAulas.forEach((aula) => __awaiter(this, void 0, void 0, function* () {
+                    yield sql.query("INSERT INTO aluno_has_aula (idAluno, idAula, Aluno_Presente) VALUES(?, ? , ?);", [p.idAluno, aula, true]);
+                }));
+                res = sql.linhasAfetadas.toString();
             }));
-            return (lista || []);
+            return res;
         });
     }
 };
-//# sourceMappingURL=academia-model.js.map
+//# sourceMappingURL=matricula-model.js.map
