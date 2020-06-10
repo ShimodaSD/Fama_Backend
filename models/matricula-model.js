@@ -17,7 +17,38 @@ module.exports = class Presenca {
             // 	return res;
             yield sql.conectar((sql) => __awaiter(this, void 0, void 0, function* () {
                 p.idAulas.forEach((aula) => __awaiter(this, void 0, void 0, function* () {
-                    yield sql.query("INSERT INTO aluno_has_aula (idAluno, idAula, Aluno_Presente) VALUES(?, ? , ?);", [p.idAluno, aula, true]);
+                    yield sql.query("INSERT INTO aluno_has_aula (idAluno, idAula, Aluno_Presente) VALUES(?, ? , ?);", [p[0].idAluno, aula, false]);
+                }));
+                res = sql.linhasAfetadas.toString();
+            }));
+            return res;
+        });
+    }
+    static listar(idAula) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let lista = null;
+            yield sql.conectar((sql) => __awaiter(this, void 0, void 0, function* () {
+                lista = (yield sql.query(`
+				select aluno.nomeAluno, aluno.idAluno, aluno_has_aula.Aluno_Presente from aluno
+					left join aluno_has_aula on aluno_has_aula.idAluno = aluno.idAluno
+					left join aula on aula.idAula = aluno_has_aula.idAula
+					where aula.idAula = ?;
+				`, [idAula]));
+            }));
+            return (lista || []);
+        });
+    }
+    static marcar(p) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let res;
+            // if ((res = Presenca.validar(aulas)))
+            // 	return res;
+            yield sql.conectar((sql) => __awaiter(this, void 0, void 0, function* () {
+                p.idAlunos.forEach((idAluno) => __awaiter(this, void 0, void 0, function* () {
+                    yield sql.query(`update aluno_has_aula
+					set Aluno_Presente = 1
+					where idAluno = ?;
+				`, [idAluno]);
                 }));
                 res = sql.linhasAfetadas.toString();
             }));

@@ -16,5 +16,14 @@ router.post("/adicionar", wrap((req, res) => __awaiter(void 0, void 0, void 0, f
     let aluno = req.body;
     res.json(yield Matricula.adicionar(aluno));
 })));
+router.get("/listar", wrap((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let id = parseInt(req.query["idAula"]);
+    res.json(yield Matricula.listar(id));
+})));
+router.post("/presenca", wrap((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let presenca = req.body;
+    console.log(presenca);
+    res.json(yield Matricula.marcar(presenca));
+})));
 module.exports = router;
 //# sourceMappingURL=matricula-route.js.map
